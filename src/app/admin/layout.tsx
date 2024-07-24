@@ -1,21 +1,16 @@
-import { Nav, NavButton, NavLink } from "@/components/Nav";
+import { AdminNavBar } from "@/components/Nav";
+import { getServerSession } from "next-auth";
+import { authOptions } from "../api/auth/[...nextauth]/options";
 
-export const dynamic = "force-dynamic";
-
-export default function AdminLayout({
+export default async function AdminLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const session = await getServerSession(authOptions);
   return (
     <>
-      <Nav>
-        <NavLink href={"/admin"}>Dashboard</NavLink>
-        <NavLink href={"/admin/products"}>Products</NavLink>
-        <NavLink href={"/admin/users"}>Users</NavLink>
-        <NavLink href={"/admin/sales"}>Sales</NavLink>
-        <NavButton href={"/admin/products/new"}>Add Product</NavButton>
-      </Nav>
+      <AdminNavBar session={session} />
       <div className=" container my-6">{children}</div>
     </>
   );
