@@ -20,12 +20,14 @@ export const LoginForm: React.FC<LoginFormProps> = ({ stores }) => {
   const [password, setPassword] = useState("");
   const [storeId, setStoreId] = useState("");
   const [error, setError] = useState("");
+  const [pending, setPending] = useState(false);
   const router = useRouter();
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
 
     try {
+      setPending(true);
       const res = await signIn("credentials", {
         storeId,
         email,
@@ -35,6 +37,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({ stores }) => {
 
       if (res && res.error) {
         setError("Invalid Credentials / Access Denied");
+        setPending(false);
         return;
       }
       router.replace("/admin");
@@ -99,7 +102,9 @@ export const LoginForm: React.FC<LoginFormProps> = ({ stores }) => {
               </Select>
             </div>
             {error && <div className="text-destructive text-center">{error} </div>}
-            <SubmitButton />
+            <Button type="submit" className="w-full" disabled={pending}>
+              {pending ? "Logging In..." : "Log In"}
+            </Button>
           </form>
           <div className="flex justify-center mt-4">
             <Link href={"/signup"} className="text-shade_3 hover:underline hover:text-primary">
@@ -111,13 +116,3 @@ export const LoginForm: React.FC<LoginFormProps> = ({ stores }) => {
     </div>
   );
 };
-
-function SubmitButton() {
-  const { pending } = useFormStatus();
-
-  return (
-    <Button type="submit" className="w-full" disabled={pending}>
-      {pending ? "Logging In..." : "Log In"}
-    </Button>
-  );
-}
