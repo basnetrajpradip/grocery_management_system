@@ -17,7 +17,6 @@ CREATE TABLE "Product" (
     "id" TEXT NOT NULL,
     "name" TEXT NOT NULL,
     "priceInRs" INTEGER NOT NULL,
-    "filePath" TEXT NOT NULL,
     "imagePath" TEXT NOT NULL,
     "description" TEXT NOT NULL,
     "isAvailableForPurchase" BOOLEAN NOT NULL DEFAULT true,

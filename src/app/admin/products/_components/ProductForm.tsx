@@ -65,12 +65,6 @@ export const ProductForm: React.FC<ProductFormProps> = ({ categories, product })
         {error.description && <div className="text-destructive">{error.description}</div>}
       </div>
       <div className="space-y-2">
-        <Label htmlFor="file">{product ? "Edit Current File :" : "File (Purchase Bill/ Product related file) :"}</Label>
-        <Input type="file" id="file" name="file" required={product == null} />
-        {product != null && <div className="text-muted-foreground">{`Current File : ${formatFilename(product.filePath)}`}</div>}
-        {error.file && <div className="text-destructive">{error.file}</div>}
-      </div>
-      <div className="space-y-2">
         <Label htmlFor="image">{product ? "Edit Current Image :" : "Image :"}</Label>
         <Input type="file" id="image" name="image" required={product == null} />
         {product != null && (
