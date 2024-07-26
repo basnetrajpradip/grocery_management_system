@@ -8,9 +8,10 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 
 interface UserProductsProps {
   categories?: Category[];
+  storeId: string | undefined;
 }
 
-export const UserProducts: React.FC<UserProductsProps> = ({ categories }) => {
+export const UserProducts: React.FC<UserProductsProps> = ({ categories, storeId }) => {
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
   const [categoryId, setCategoryId] = useState("all");
@@ -18,12 +19,13 @@ export const UserProducts: React.FC<UserProductsProps> = ({ categories }) => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
+        setLoading(true);
         const res = await fetch("/api/products", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ categoryId }),
+          body: JSON.stringify({ categoryId, storeId }),
         });
         const data = await res.json();
         setProducts(data);
@@ -35,7 +37,7 @@ export const UserProducts: React.FC<UserProductsProps> = ({ categories }) => {
     };
 
     fetchProducts();
-  }, [categoryId]);
+  }, [categoryId, storeId]);
 
   if (loading) {
     return (

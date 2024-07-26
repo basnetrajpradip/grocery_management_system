@@ -3,12 +3,15 @@ import { NextResponse } from "next/server";
 
 export async function POST(req: Request) {
   try {
-    const { categoryId } = await req.json();
+    const { categoryId, storeId } = await req.json();
     let products;
     if (categoryId === "all") {
-      products = await db.product.findMany({ where: { isAvailableForPurchase: true }, orderBy: { name: "asc" } });
+      products = await db.product.findMany({ where: { isAvailableForPurchase: true, storeId: storeId }, orderBy: { name: "asc" } });
     } else {
-      products = await db.product.findMany({ where: { categoryId: categoryId, isAvailableForPurchase: true }, orderBy: { name: "asc" } });
+      products = await db.product.findMany({
+        where: { categoryId: categoryId, isAvailableForPurchase: true, storeId: storeId },
+        orderBy: { name: "asc" },
+      });
     }
     return NextResponse.json(products);
   } catch (error) {

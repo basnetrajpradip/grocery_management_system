@@ -58,18 +58,18 @@ async function getProductData(storeId: string | undefined) {
   return { activeCount, inactiveCount };
 }
 
-function getMostPopularProducts() {
+function getMostPopularProducts(storeId: string | undefined) {
   return db.product.findMany({
-    where: { isAvailableForPurchase: true },
+    where: { isAvailableForPurchase: true, storeId: storeId },
     orderBy: { sales: { _count: "desc" } },
     take: 6,
     include: { category: true },
   });
 }
 
-function getNewestProducts() {
+function getNewestProducts(storeId: string | undefined) {
   return db.product.findMany({
-    where: { isAvailableForPurchase: true },
+    where: { isAvailableForPurchase: true, storeId: storeId },
     orderBy: { createdAt: "desc" },
     take: 6,
     include: { category: true },
@@ -105,8 +105,8 @@ export default async function UserDashboard() {
         />
       </div>
       <main className="space-y-12">
-        <ProductGridSection title="Most Popular" productsFetcher={getMostPopularProducts} />
-        <ProductGridSection title="Newest" productsFetcher={getNewestProducts} />
+        <ProductGridSection title="Most Popular" productsFetcher={() => getMostPopularProducts(session?.user.storeId)} />
+        <ProductGridSection title="Newest" productsFetcher={() => getNewestProducts(session?.user.storeId)} />
       </main>
     </div>
   );

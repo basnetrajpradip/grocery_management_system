@@ -29,7 +29,7 @@ export function SaleForm({ product }: { product: Product }) {
             <Input type="hidden" value={product.id} name="productId" />
           </CardHeader>
           <CardContent className="flex-grow">
-            <p className="line-clamp-2">{product.description}</p>
+            <p className="">{product.description}</p>
             <div>
               <Label htmlFor="quantity"></Label>
             </div>
