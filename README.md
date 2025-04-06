@@ -15,7 +15,7 @@ Live preview of the web app is [Here](https://pradip-grocery-management-system.v
 
 ---
 
-## About Chit Chat App
+## About Grocery Management System
 
 The Grocery Management System App is a comprehensive platform designed to streamline the management and sale of grocery products. This app caters to two primary user roles: Admin and User, each with distinct capabilities and access levels to ensure efficient operation and management of the grocery business.
 
